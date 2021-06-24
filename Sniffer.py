@@ -169,8 +169,8 @@ def packet_logger_decorator(protocol, sniffer_log):
         print(f"{datetime.now()} | {packet.summary()}")
         # print(packet.payload.layers())
         # print(packet[packet.payload.layers()[0]])
-        for count in range(len(packet.layers())):
-            print(packet.getlayer(count).name)
+        # for count in range(len(packet.layers())):
+        #     print(packet.getlayer(count).name)
     return packet_logger
 
 
