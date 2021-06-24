@@ -104,37 +104,73 @@ file_name, sniffer_log = get_snifferlog()
 # This is the function that will be called for each captured packet
 # The function will extract parameters from the packet and then log each packet to the log file
 def packet_logger_decorator(protocol, sniffer_log):
-    def packet_logger(packet):
+    def packet_logger(packet: scapy.layers.l2.Ether):
         # Getting the current timestamp
         now = datetime.now()
 
         # Writing the packet information to the log file, also considering the protocols or 0 for all protocols
-        # if protocol == "0":
-        # Writing the data to the log file
-        # print("Time: " + str(now) + " Protocol: ALL" + " SMAC: " + packet[0].src + " DMAC: " + packet[0].dst,
-        #       file=sniffer_log)
+
         # print(type(packet))
-        # print(packet)
-        # print(dir(packet))
-        # print(vars(packet))
-        # print(len(packet))
-        # print(packet[0][IP].src)
-        # print(packet[0][IP].dst)
+        # print(getattr(packet, "haslayer", "no haslayer"))
 
-        print(f"Time: {datetime.now()} | "
-              f"Protocol: {protocols[protocol].upper()} | "
-              f"SMAC: {packet[0].src} | "
-              f"DMAC: {packet[0].dst}",
-              f"SIP : {packet[0][IP].src} | "
-              f"DIP : {packet[0][IP].dst}",
-              file=sniffer_log
-              )
-        # elif (protocol == "arp") or (protocol == "bootp") or (protocol == "icmp"):
-        #     # Writing the data to the log file
+        # methods = [method for method in dir(packet[0]) if not method.startswith("_")]
+        # prot = [method for method in dir(packet) if "lay" in method]
+        # print(methods)
+        # print(prot)
+        # print(packet.summary())
+        # packet.show()
+        # while True:
+        #     packet.getlayer()
+
+        # def ddir(obj):
+        #     return [m for m in dir(obj) if not m.startswith("_")]
+        #
+        # def vvars(obj):
+        #     return [m for m in vars(obj) if not m.startswith("_")]
+
+        # for layer in packet.layers():
+        #     # print(layer)
+        #     # print(ddir(layer))
+        #     # print(vvars(layer))
+        #     print(layer.name())
+        # def get_packet_layers(packet):
+        #     counter = 0
+        #     while True:
+        #         layer = packet.getlayer(counter)
+        #         if layer is None:
+        #             break
+        #
+        #         yield layer
+        #         counter += 1
+        #
+        # for layer in get_packet_layers(packet):
+        #     print(layer.name)
+        #
+        # if packet.haslayer(IP):
         #     print(
-        #         "Time: " + str(now) + " Protocol: " + protocol.upper() + " SMAC: " + packet[0].src + " DMAC: " + packet[
-        #             0].dst, file=sniffer_log)
-
+        #         f"{datetime.now()} | "
+        #         f"Protocol: {protocols[protocol].upper()} | "
+        #         f"SMAC: {packet[0].src} | "
+        #         f"DMAC: {packet[0].dst}",
+        #         f"SIP : {packet[0][IP].src} | "
+        #         f"DIP : {packet[0][IP].dst}",
+        #         file=sniffer_log
+        #     )
+        # else:
+        #     print(
+        #         f"{datetime.now()} | "
+        #         f"Protocol: {protocols[protocol].upper()} | "
+        #         f"SMAC: {packet[0].src} | "
+        #         f"DMAC: {packet[0].dst}",
+        #         # f"SIP : {packet[0][IP].src} | "
+        #         # f"DIP : {packet[0][IP].dst}",
+        #         file=sniffer_log
+        #     )
+        print(f"{datetime.now()} | {packet.summary()}")
+        # print(packet.payload.layers())
+        # print(packet[packet.payload.layers()[0]])
+        for count in range(len(packet.layers())):
+            print(packet.getlayer(count).name)
     return packet_logger
 
 

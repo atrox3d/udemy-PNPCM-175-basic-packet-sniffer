@@ -46,7 +46,7 @@ def get_iface():
 
 def get_packetcount():
     # Asking the user for the number of packets to sniff (the "count" parameter)
-    packet_count = int(input("* Enter the number of packets to capture (0 is infinity): ") or 0)
+    packet_count = int(input("* Enter the number of packets to capture (0 is infinity): ") or 1)
     print(f":packet count: {packet_count}")
     # Considering the case when the user enters 0 (infinity)
     if int(packet_count) != 0:
