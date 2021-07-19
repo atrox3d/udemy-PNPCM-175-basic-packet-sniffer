@@ -72,6 +72,7 @@ Examples:
   ...                                   pkt.summary()))
 '''
 
+import sys
 # Importing the necessary modules
 try:
     from scapy.all import *
@@ -80,7 +81,6 @@ except ImportError:
     print("Scapy package for Python is not installed on your system.")
     sys.exit()
 
-import sys
 from functions import suppress_loggers, set_promiscuous, get_iface, get_packetcount, get_snifftime, get_protocol, \
     get_snifferlog, protocols
 
